@@ -1,22 +1,46 @@
-let balls = [new Ball(100, 400, 20), new Ball(700, 400, 80)];
+llet canvasX = 400;
+let canvasY = 500;
+let canvasBG = 0;
+
+let brickSize = 50;
+
+let balls = [new Ball(canvasX/2, canvasY-10, 10)];
+let bricks = [];
+
 console.log(balls);
 
 function setup() {
+  canvasBG = color(25, 25, 255);
+  createCanvas(canvasX,canvasY);
   
-  createCanvas(710, 400);
-  
-  
+  generateBrickLine(6); //
+}
+    
+function generateBrickLine(numBricks) {
+  let offsetX = 0;
+  for (let x = 0; x < numBricks; x++) {
+    let tempB = new Brick(brickSize +offsetX,brickSize,brickSize,brickSize,5);
+    bricks.push(tempB);
+    offsetX += brickSize;
+  }  
+  console.log(bricks);
 }
 
 function draw() {
-  background(220);
+  background(canvasBG);
   
    for (let i = 0; i < balls.length; i++) {
     let b = balls[i];
     b.update();
     b.display();
     b.checkBoundaryCollision();
-    balls[0].checkCollision(balls[1]);
+    //balls[0].checkCollision(balls[1]);
+    b.checkBrickCollision(bricks);
+  }
+  
+  for (let i = 0; i < bricks.length; i++) {
+    let brick = bricks[i];
+    brick.display();
   }
   
 }
