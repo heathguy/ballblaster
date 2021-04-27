@@ -1,8 +1,8 @@
-llet canvasX = 400;
+let canvasX = 400;
 let canvasY = 500;
 let canvasBG = 0;
 
-let brickSize = 50;
+let brickSize = 40;
 
 let balls = [new Ball(canvasX/2, canvasY-10, 10)];
 let bricks = [];
@@ -13,15 +13,18 @@ function setup() {
   canvasBG = color(25, 25, 255);
   createCanvas(canvasX,canvasY);
   
-  generateBrickLine(6); //
+  generateBrickLine(8); //
 }
     
 function generateBrickLine(numBricks) {
-  let offsetX = 0;
+  let offsetX = 5;
+  let brickX = offsetX;
   for (let x = 0; x < numBricks; x++) {
-    let tempB = new Brick(brickSize +offsetX,brickSize,brickSize,brickSize,5);
+
+    let tempB = new Brick(brickX,brickSize,brickSize,brickSize,1);
     bricks.push(tempB);
-    offsetX += brickSize;
+    offsetX += (brickSize+10);
+    brickX = offsetX;
   }  
   console.log(bricks);
 }
@@ -42,5 +45,5 @@ function draw() {
     let brick = bricks[i];
     brick.display();
   }
-  
+  console.log(bricks);
 }
