@@ -32,6 +32,7 @@ class Ball {
 
       //print('colliding?', hit);
       if(hit) {
+        brickList.splice(i,1);
         this.velocity.y *= -1;
         b.hits--;
         break;
