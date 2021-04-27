@@ -3,7 +3,7 @@ class Ball {
   constructor(x, y, r) {
     this.position = new p5.Vector(x, y);
     this.velocity = p5.Vector.random2D();
-    this.velocity.mult(3);
+    this.velocity.mult(4);
     this.r = r;
     //this.m = r * 0.1;
   }
@@ -18,6 +18,9 @@ class Ball {
     } else if (this.position.y > height - this.r) {
       this.position.y = height - this.r;
       this.velocity.y *= -1;
+      console.log('Hit Bottom');
+      gamePaused = true;
+      
     } else if (this.position.y < this.r) {
       this.position.y = this.r;
       this.velocity.y *= -1;
