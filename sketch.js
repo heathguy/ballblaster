@@ -7,6 +7,11 @@ let brickSize = 40;
 let balls = [new Ball(canvasX/2, canvasY-10, 10)];
 let bricks = [];
 
+let gamePaused = true;
+let gameOver = false;
+
+let drawLaunchLine = false;
+
 console.log(balls);
 
 function setup() {
@@ -31,6 +36,13 @@ function generateBrickLine(numBricks) {
 
 function draw() {
   background(canvasBG);
+  balls[0].display();
+  if(drawLaunchLine) {
+    stroke(255,255,255);
+    line(balls[0].position.x, balls[0].position.y, mouseX, mouseY);
+  }
+  
+  if(!gamePaused) {
   
    for (let i = 0; i < balls.length; i++) {
     let b = balls[i];
@@ -40,10 +52,30 @@ function draw() {
     //balls[0].checkCollision(balls[1]);
     b.checkBrickCollision(bricks);
   }
-  
+  }
   for (let i = 0; i < bricks.length; i++) {
     let brick = bricks[i];
     brick.display();
   }
   console.log(bricks);
+
+}
+
+function keyPressed() {
+  if (keyCode === 32) {
+    gamePaused = false;
+  }
+}
+
+function mousePressed() {
+  if(gamePaused) {
+    drawLaunchLine = true;
+  }
+}
+function mouseReleased() {
+  if(gamePaused) {
+    drawLaunchLine = false;
+    this.velocity = p5.Vector(mouseX, mouseY);
+    gamePaused = false;
+  }
 }
