@@ -89,7 +89,7 @@ function mouseReleased() {
     }
     else {
       newVel = mouseVel.sub(newVel);
-      newVel.x *= -1;
+      //newVel.x *= -1;
       //newVel.y *= -1;
     }
     
