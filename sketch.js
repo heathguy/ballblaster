@@ -84,14 +84,14 @@ function mouseReleased() {
     
     let newVel = new p5.Vector(balls[0].position.x,balls[0].position.y);
     
-    if(mouseVel.x < balls[0].position.x) {
+    //if(mouseVel.x < balls[0].position.x) {
       newVel = mouseVel.sub(newVel); 
-    }
-    else {
-      newVel = mouseVel.sub(newVel);
+    //}
+    //else {
+      //newVel = mouseVel.sub(newVel);
       //newVel.x *= -1;
       //newVel.y *= -1;
-    }
+    //}
     
     console.log(newVel);
     
