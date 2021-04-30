@@ -2,8 +2,8 @@ class Ball {
   
   constructor(x, y, r) {
     this.position = new p5.Vector(x, y);
-    this.velocity = p5.Vector.random2D();
-    this.velocity.mult(4);
+    this.velocity = new p5.Vector(0, 0);
+    //this.velocity.mult(4);
     this.r = r;
     //this.m = r * 0.1;
   }
@@ -16,8 +16,10 @@ class Ball {
       this.position.x = this.r;
       this.velocity.x *= -1;
     } else if (this.position.y > height - this.r) {
-      this.position.y = height - this.r;
-      this.velocity.y *= -1;
+      this.position.y = height - this.r - 5;
+      //this.velocity.y *= -1;
+      this.velocity.x = 0;
+      this.velocity.y = 0;
       console.log('Hit Bottom');
       gamePaused = true;
       
@@ -35,9 +37,13 @@ class Ball {
 
       //print('colliding?', hit);
       if(hit) {
-        brickList.splice(i,1);
         this.velocity.y *= -1;
-        b.hits--;
+        if(b.hits-1 <= 0) {
+          brickList.splice(i,1);
+        }
+        else {
+          b.hits--;
+        }
         break;
       } 
     }
