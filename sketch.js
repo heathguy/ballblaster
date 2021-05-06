@@ -4,7 +4,7 @@ let canvasBG = 0;
 
 let brickSize = 40;
 let ballSize = 10;
-let ballSpeed = 5;
+let ballSpeed = 4;
 
 let balls = [new Ball(canvasX/2, canvasY-ballSize-5, ballSize)];
 let bricks = [];
