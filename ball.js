@@ -32,6 +32,32 @@ class Ball {
   checkBrickCollision(brickList) {
     for (let i = 0; i < brickList.length; i++) {
       let b = brickList[i];
+      /*
+      if( ((ballCenterX>brick.getXpos()-radius &&
+				   ballCenterX<brick.getXpos() && vX>0 ) ||
+					(ballCenterX>brick.getXpos()+Squash.brickWidth &&
+				   ballCenterX<brick.getXpos()+Squash.brickWidth+radius && vX<0)) && 
+				    (ballCenterY>brick.getYpos()-radius &&
+				   ballCenterY<brick.getYpos()+Squash.brickHeight+radius) )
+				{
+					vX=-vX;
+					bricks.get(i).setCrashed(true);
+					Squash.destroyedBricksCounter--;
+				}
+				
+				if(  ((ballCenterY>brick.getYpos()-radius &&
+					ballCenterY<brick.getYpos() && vY>0) ||
+					  (ballCenterY>brick.getYpos()+Squash.brickHeight &&
+					ballCenterY<brick.getYpos()+Squash.brickHeight+radius && vY<0)) &&
+					  (ballCenterX>brick.getXpos() &&
+				    ballCenterX<brick.getXpos()+Squash.brickWidth)  )
+				{
+					vY=-vY;
+					bricks.get(i).setCrashed(true);
+					Squash.destroyedBricksCounter--;
+				}
+      */
+      
 
       let hit = collideRectCircle(b.getX(), b.getY(), b.getW(), b.getH(), this.position.x, this.position.y, this.r);
 
