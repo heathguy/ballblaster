@@ -27,50 +27,93 @@ class Ball {
       this.position.y = this.r;
       this.velocity.y *= -1;
     }
+    return gamePaused;
   }
   
   checkBrickCollision(brickList) {
+    let hit = 0;
     for (let i = 0; i < brickList.length; i++) {
       let b = brickList[i];
-      /*
-      if( ((ballCenterX>brick.getXpos()-radius &&
-				   ballCenterX<brick.getXpos() && vX>0 ) ||
-					(ballCenterX>brick.getXpos()+Squash.brickWidth &&
-				   ballCenterX<brick.getXpos()+Squash.brickWidth+radius && vX<0)) && 
-				    (ballCenterY>brick.getYpos()-radius &&
-				   ballCenterY<brick.getYpos()+Squash.brickHeight+radius) )
-				{
-					vX=-vX;
-					bricks.get(i).setCrashed(true);
-					Squash.destroyedBricksCounter--;
-				}
-				
-				if(  ((ballCenterY>brick.getYpos()-radius &&
-					ballCenterY<brick.getYpos() && vY>0) ||
-					  (ballCenterY>brick.getYpos()+Squash.brickHeight &&
-					ballCenterY<brick.getYpos()+Squash.brickHeight+radius && vY<0)) &&
-					  (ballCenterX>brick.getXpos() &&
-				    ballCenterX<brick.getXpos()+Squash.brickWidth)  )
-				{
-					vY=-vY;
-					bricks.get(i).setCrashed(true);
-					Squash.destroyedBricksCounter--;
-				}
-      */
-      
 
-      let hit = collideRectCircle(b.getX(), b.getY(), b.getW(), b.getH(), this.position.x, this.position.y, this.r);
+      // check if 
+      //if(
+        // check ball X + Radius against X
+        //(this.position.x+this.r >= b.getX() && this.position.x+this.r <= b.getX()+b.w) &&
+        //(this.position.y+this.r >= b.getY() && this.position.y+this.r <= b.getY()+b.h)
+      
+      //) {
+      //  hit = true;
+      //}
+      hit = collideRectCircle(b.position.x, b.position.y, b.w, b.h, this.position.x, this.position.y, this.r);
 
       //print('colliding?', hit);
       if(hit) {
+        //find out if ball hit the top/bottom or side of brick
+        let t1 = createVector(0,0);
+        let b1 = createVector(0,0);
+        let s1 = createVector(0,0);
+        let s2 = createVector(0,0);
+        
+        t1.x = b.position.x+(b.w/2);
+        t1.y = b.position.y;
+        
+        b1.x = b.position.x+(b.w/2);
+        b1.y = b.position.y+b.h;
+        
+        s1.x = b.position.x;
+        s1.y = b.position.y+(b.h/2);
+        
+        s2.x = b.position.x+b.w;
+        s2.y = b.position.y+(b.h/2);
+        
+        let d = 9999;
+        let shortestd = 9999;
+        let sideHit = false; // sideHit is true if ball hit side, false if hit top/bottom
+        
+        
+        d = dist(this.position.x, this.position.y, t1.x, t1.y);
+        if(d < shortestd) {
+          shortestd = d;
+          sideHit = false;
+        }
+        d = dist(this.position.x, this.position.y, b1.x, b1.y);
+        if(d < shortestd) {
+          shortestd = d;
+          sideHit = false;
+        }
+        d = dist(this.position.x, this.position.y, s1.x, s1.y);
+        if(d < shortestd) {
+          shortestd = d;
+          sideHit = true;
+        }
+        d = dist(this.position.x, this.position.y, s2.x, s2.y);
+        if(d < shortestd) {
+          shortestd = d;
+          sideHit = true;
+        }
+        
+        //console.log(t1);
+        //console.log(b1);
+        //console.log(s1);
+        //console.log(s2);
+        
+        
+        //if ball hit the top or bottom of the brick, invert y
+        if(!sideHit) {
         this.velocity.y *= -1;
+        }
+        else {
+        // if ball hit left or right side of brick, invert x
+        this.velocity.x *= -1;
+        }
+        
         if(b.hits-1 <= 0) {
           brickList.splice(i,1);
         }
         else {
           b.hits--;
         }
-        break;
+        //break;
       } 
     }
 }
