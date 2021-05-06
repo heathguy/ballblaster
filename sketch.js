@@ -4,7 +4,7 @@ let canvasBG = 0;
 
 let brickSize = 40;
 let ballSize = 10;
-let ballSpeed = 4;
+let ballSpeed = 5;
 
 let balls = [new Ball(canvasX/2, canvasY-ballSize-5, ballSize)];
 let bricks = [];
@@ -23,10 +23,14 @@ function setup() {
   canvasBG = color(25, 25, 255);
   createCanvas(canvasX,canvasY);
   
-  generateBrickLine(8); //
+  pauseGame();
+  //generateBrickLine(8); //
 }
-    
-function generateBrickLine(numBricks) {
+
+// create a line of bricks from 1-8 bricks add 
+function generateBrickLine() {
+  let numBricks = random(1,8);
+  
   let offsetX = 5;
   let brickX = offsetX;
   for (let x = 0; x < numBricks; x++) {
@@ -46,23 +50,55 @@ function draw() {
     stroke(255,255,255);
     line(balls[0].position.x, balls[0].position.y, mouseX, mouseY);
   }
-  
+    for (let i = 0; i < bricks.length; i++) {
+    let brick = bricks[i];
+    brick.display();
+  }
   if(!gamePaused) {
   
    for (let i = 0; i < balls.length; i++) {
       //let b = balls[i];
+     let needToPauseGame = false;
       balls[i].update();
       balls[i].display();
-      balls[i].checkBoundaryCollision();
+      needToPauseGame = balls[i].checkBoundaryCollision();
+     if(needToPauseGame) {
+       pauseGame();
+     }
       //balls[0].checkCollision(balls[1]);
       balls[i].checkBrickCollision(bricks);
+    }  
+  }
+}
+
+function pauseGame() {
+  gamePaused = true;
+  console.log('PAUSE GAME!');
+  
+  // drop existing line of bricks down
+  // check for game over condition
+  // add new line of bricks to game
+  for (let i = 0; i < bricks.length; i++) {
+    bricks[i].position.y += brickSize+5;
+    bricks[i].display();
+    if(bricks[i].position.y+brickSize >= height-brickSize) {
+      gameOver = true;
     }
   }
-  for (let i = 0; i < bricks.length; i++) {
-    let brick = bricks[i];
-    brick.display();
+  if(!gameOver) {
+    generateBrickLine();
   }
+  else {
+    endGame();
+  }
+}
 
+function endGame() {
+  noLoop();
+  textSize(48);
+  textAlign(CENTER, CENTER);
+  //text("Game Over", width/2-100, height/2-100, width/2, height/2);
+  text("Game Over", width/2, height/2);
 }
 
 function keyPressed() {
@@ -84,14 +120,7 @@ function mouseReleased() {
     
     let newVel = new p5.Vector(balls[0].position.x,balls[0].position.y);
     
-    //if(mouseVel.x < balls[0].position.x) {
-      newVel = mouseVel.sub(newVel); 
-    //}
-    //else {
-      //newVel = mouseVel.sub(newVel);
-      //newVel.x *= -1;
-      //newVel.y *= -1;
-    //}
+    newVel = mouseVel.sub(newVel); 
     
     console.log(newVel);
     
