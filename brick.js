@@ -1,7 +1,17 @@
 class Brick {
   constructor(x, y, w, h, hits) {
     this.position = new p5.Vector(x, y);
-    this.brickColor = color(255,0,0);
+    let bc = map(hits, 1, 999, 100, 255);
+    console.log("Brick Color: ", bc);
+    if(hits < 20) {
+      this.brickColor = color(bc,100,150);
+    }
+    else if(hits > 20 && hits < 50) {
+      this.brickColor = color(200,bc,100);
+    }
+    else {
+      this.brickColor = color(120,150,bc);
+    }
     this.hits = hits;
     this.w = w;
     this.h = h;
@@ -20,10 +30,9 @@ class Brick {
     return this.h;
   }
   
-  
   display() {
     stroke(255,150,150);
-    //strokeWeight(3);
+    strokeWeight(2);
     fill(this.brickColor);
     //rect(this.position.x, this.position.y, this.w, this.h);
     square(this.position.x, this.position.y, this.w);
