@@ -44,7 +44,7 @@ class Ball {
       //) {
       //  hit = true;
       //}
-      hit = collideRectCircle(b.position.x, b.position.y, b.w, b.h, this.position.x, this.position.y, this.r);
+      hit = collideRectCircle(b.position.x, b.position.y, b.w, b.h, this.position.x, this.position.y, this.r+(this.r/2));
 
       //print('colliding?', hit);
       if(hit) {
