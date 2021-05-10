@@ -4,7 +4,7 @@ let canvasBG = 0;
 
 let brickSize = 40;
 let ballSize = 10;
-let ballSpeed = 4;
+let ballSpeed = 5;
 
 let balls = [new Ball(canvasX/2, canvasY-ballSize-5, ballSize)];
 let bricks = [];
@@ -34,8 +34,8 @@ function generateBrickLine() {
   let offsetX = 5;
   let brickX = offsetX;
   for (let x = 0; x < numBricks; x++) {
-
-    let tempB = new Brick(brickX,brickSize,brickSize,brickSize,2);
+    let numHits = random(1,999);
+    let tempB = new Brick(brickX,brickSize,brickSize,brickSize,numHits);
     bricks.push(tempB);
     offsetX += (brickSize+10);
     brickX = offsetX;
